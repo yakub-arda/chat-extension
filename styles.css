@@ -15,6 +15,60 @@ h3 {
   margin: auto 0;
 }
 
+.code-inputs {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 20px;
+}
+
+.code-input {
+  font-family: Verdana, sans-serif;
+  font-size: 1rem;
+  background: #444444;
+  color: #ffffff;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  border-radius: 20%;
+  text-align: center;
+  font-weight: bold;
+}
+
+.code-input:focus {
+  outline: 2px solid #888;
+}
+
+.join-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 60%;
+  justify-content: center;
+}
+
+.chat-code {
+  padding: 10px;
+  display: flex;
+  height: 50px;
+}
+
+.chat-code p {
+  margin: auto;
+}
+
+.code {
+  font-family: Verdana, sans-serif;
+  font-size: 1rem;
+  margin: 0.1rem;
+  padding: 0.8rem 0.4rem;
+  background: #444444;
+  width: 20px;
+  text-align: center;
+  border-radius: 20%;
+  font-weight: bolder;
+}
+
 .chat-image {
   max-width: 80%;
   max-height: 200px;
@@ -38,7 +92,7 @@ h3 {
 
 .button-group button {
   background-color: #1a1a1a;
-  margin: 30px 0;
+  margin: 10px 0;
   width: 100%;
   color: #ffffff;
   border: none;
