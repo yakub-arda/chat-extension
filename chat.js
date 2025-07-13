@@ -10,6 +10,16 @@ let secretKey = null;
 let socket = null;
 let skipGenerate = false;
 
+// === SANITIZATION HELPER ===
+function escapeHTML(str) {
+  return str
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+}
+
 // === ENCRYPTION HELPERS ===
 function generateCode(length = 4) {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -75,7 +85,6 @@ function initSocket() {
   socket.addEventListener("open", () => {
     socket.send(JSON.stringify({ type: "setName", name }));
 
-    // Send join message with chat code
     const chatCode = skipGenerate
         ? existing
         : Array.from(codeBoxes).map(box => box.textContent).join("");
@@ -146,9 +155,19 @@ attachBtn.addEventListener("click", () => {
 
   filePicker.onchange = () => {
     const file = filePicker.files[0];
+    if (!file || !file.type.startsWith("image/") || file.size > 5 * 1024 * 1024) {
+      alert("Invalid image file. Must be an image under 5MB.");
+      return;
+    }
+
     const reader = new FileReader();
     reader.onload = () => {
-      attachedImage = reader.result.split(",")[1];
+      const base64 = reader.result.split(",")[1];
+      if (!/^[A-Za-z0-9+/=]+={0,2}$/.test(base64)) {
+        alert("Invalid image data.");
+        return;
+      }
+      attachedImage = base64;
       attachBtn.textContent = "X";
     };
     reader.readAsDataURL(file);
@@ -162,14 +181,14 @@ function addMessageToChat(text, cls, sender) {
   if (sender !== lastSender) {
     const nameTag = document.createElement("p");
     nameTag.className = "name";
-    nameTag.textContent = sender;
+    nameTag.textContent = escapeHTML(sender);
     messagesDiv.appendChild(nameTag);
     lastSender = sender;
   }
 
   const div = document.createElement("div");
   div.className = cls;
-  div.textContent = text;
+  div.textContent = escapeHTML(text);
   messagesDiv.appendChild(div);
   messagesDiv.scrollTop = messagesDiv.scrollHeight;
 }
@@ -178,7 +197,7 @@ function addImageToChat(base64, cls, sender) {
   if (sender !== lastSender) {
     const nameTag = document.createElement("p");
     nameTag.className = "name";
-    nameTag.textContent = sender;
+    nameTag.textContent = escapeHTML(sender);
     messagesDiv.appendChild(nameTag);
     lastSender = sender;
   }
@@ -193,7 +212,7 @@ function addImageToChat(base64, cls, sender) {
 function addSystemMessage(text) {
   const sys = document.createElement("div");
   sys.className = "system";
-  sys.textContent = text;
+  sys.textContent = escapeHTML(text);
   messagesDiv.appendChild(sys);
   messagesDiv.scrollTop = messagesDiv.scrollHeight;
 }
