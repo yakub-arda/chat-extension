@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Enter Server IP</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+
+<body>
+<div class="button-group">
+  <h2><label for="ipInput"> Enter WebSocket Server IP </label></h2>
+  <input class="input-box input" id="ipInput" placeholder="e.g. XXX.XXX.XXX.XXX">
+  <button id="connectBtn">Connect</button>
+
+  <br><br>
+  <h3>How to find the Server's IP</h3>
+  <p>Open Terminal in Mac.</p>
+  <p>Then copy and paste this:</p>
+  <br>
+  <p style="font-weight: bolder">ipconfig getifaddr en0</p>
+  <br>
+  <p> and press enter. </p>
+  <p>Now just copy the IP address </p>
+  <p>and paste it here.</p>
+</div>
+
+<script src="ip.js"></script>
+</body>
+</html>

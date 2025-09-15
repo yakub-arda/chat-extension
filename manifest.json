@@ -4,7 +4,7 @@
   "version": "1.0",
   "manifest_version": 3,
   "action": {
-    "default_popup": "home.html",
+    "default_popup": "ip.html",
     "default_icon": "icon-circle.png"
   }
 }

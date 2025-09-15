@@ -80,7 +80,8 @@ if (!skipGenerate) {
 
 // === WEBSOCKET + CHAT LOGIC ===
 function initSocket() {
-  socket = new WebSocket("ws://192.168.0.162:3000");
+  const ip = localStorage.getItem("serverIP") || "localhost";
+  socket = new WebSocket(`ws://${ip}:3000`);
 
   socket.addEventListener("open", () => {
     socket.send(JSON.stringify({ type: "setName", name }));
